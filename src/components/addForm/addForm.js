@@ -14,10 +14,12 @@ const AddForm = ({id, service}) => {
             setError({name: false, comment: false});
             setStatus("loading");
             service.addComment(id, data)
-                .then(res => {
+                .then(() => {
                     setStatus("ok");
+                    nameRef.current.value = "";
+                    commentRef.current.value = "";
                 })
-                .catch(e => {
+                .catch(() => {
                     setStatus("fail");
                     setError({...error, load: true})
                 });
