@@ -3,6 +3,7 @@ import Service from "../../service";
 import Loader from "../loader/loader";
 import Image from "../image/image";
 import Modal from "../modal/modal";
+import Error from "../error/error";
 
 import "./app.scss";
 
@@ -19,16 +20,16 @@ const App = () => {
             setLoading(true);
             service.getAll()
                 .then(res => {
-                    console.log(res)
                     setLoading(false);
                     setData(res);
+                    setError(false);
                 })
                 .catch(() => {
                     setLoading(false);
                     setError(true)
                 })
         }
-    })
+    }, [data])
 
 
     const showModal = (id) => {
@@ -40,7 +41,7 @@ const App = () => {
             {modal? <Modal id={modal} trigger={setModal} service={service}/> : ""}
             <h1 className="main-header">Test App</h1>
             {loading? <Loader/> : ""}
-            {error? "Error" : ""}
+            {error? <Error/> : ""}
             <section className="content">
                 {data.length? data.map(item =>
                     <a

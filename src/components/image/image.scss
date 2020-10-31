@@ -1,10 +1,15 @@
 .image__wrapper{
-  max-width: 229px;
-  max-height: 142px;
+  width: 229px;
   margin-left: 20px;
   margin-bottom: 30px;
 
 }
 .image__img{
   width: 100%;
+}
+
+@media (max-width: 783px) {
+  .image__wrapper{
+    width: 280px;
+  }
 }

@@ -51,3 +51,9 @@ body, html{
 .main-footer__copyright{
   display: inline-block;
 }
+
+@media (max-width: 639px) {
+  .content{
+    justify-content: center;
+  }
+}
