@@ -1,4 +1,4 @@
-import React, {useState, useRef} from "react";
+import React, {useState} from "react";
 
 import "./addForm.scss";
 
@@ -6,8 +6,6 @@ const AddForm = ({id, service}) => {
     const [data, setData] = useState({name: "", comment: ""})
     const [status, setStatus] = useState(null);
     const [error, setError] = useState({name: false, comment: false});
-    const nameRef = useRef();
-    const commentRef = useRef();
 
     const sendData = () => {
         if(data.name.trim() && data.comment.trim()) {
@@ -16,8 +14,6 @@ const AddForm = ({id, service}) => {
             service.addComment(id, data)
                 .then(() => {
                     setStatus("ok");
-                    nameRef.current.value = "";
-                    commentRef.current.value = "";
                     setData({name: "", comment: ""});
                 })
                 .catch(() => {
@@ -26,8 +22,8 @@ const AddForm = ({id, service}) => {
                 });
         }
         else {
-            if(!nameRef.current.value.trim()) setError(prev => {return {...prev, name: true}});
-            if(!commentRef.current.value.trim()) setError(prev => {return {...prev, comment: true}});
+            if(!data.name.trim()) setError(prev => {return {...prev, name: true}});
+            if(!data.comment.trim()) setError(prev => {return {...prev, comment: true}});
         }
     }
 
@@ -35,11 +31,12 @@ const AddForm = ({id, service}) => {
         <div className="add-form">
             <div className="add-form__wrapper">
                 <input
-                    ref={nameRef}
                     onChange={(e) => {
                         if(!e.target.value.trim()) setError({...error, name: true});
+                        else setError({...error, name: false});
                         setData({...data, name: e.target.value})
                     }}
+                    value={data.name}
                     type="text"
                     className={`add-form__input${error.name? " alert" : ""}`}
                     name="name" placeholder="Ваше имя"/>
@@ -47,11 +44,12 @@ const AddForm = ({id, service}) => {
             </div>
             <div className="add-form__wrapper">
                 <input
-                    ref={commentRef}
                     onChange={(e) => {
                         if(!e.target.value.trim()) setError({...error, comment: true});
+                        else setError({...error, comment: false});
                         setData({...data, comment: e.target.value})
                     }}
+                    value={data.comment}
                     type="text"
                     className={`add-form__input${error.comment? " alert" : ""}`}
                     name="comment" placeholder="Ваш комментарий"/>
