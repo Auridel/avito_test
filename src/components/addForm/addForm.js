@@ -18,6 +18,7 @@ const AddForm = ({id, service}) => {
                     setStatus("ok");
                     nameRef.current.value = "";
                     commentRef.current.value = "";
+                    setData({name: "", comment: ""});
                 })
                 .catch(() => {
                     setStatus("fail");
